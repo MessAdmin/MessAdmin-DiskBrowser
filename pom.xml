@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- - - - - - - - - - -->
+	<!-- POM Relationships -->
+	<!-- - - - - - - - - - -->
+
+	<!-- Coordinates -->
+	<!-- Notice no groupId or version. They were inherited from parent-->
+	<artifactId>MessAdmin-DiskBrowser</artifactId>
+
+	<!-- Inheritance -->
+	<parent>
+		<groupId>net.sourceforge.messadmin</groupId>
+		<artifactId>MessAdmin</artifactId>
+		<version>5.3</version>
+	</parent>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<!-- Compile-time dependencies (default scope) -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>MessAdmin-Core</artifactId>
+		</dependency>
+		<!-- Provided dependencies -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		<!-- Run-time dependencies -->
+		<!-- Test-time dependencies -->
+	</dependencies>
+
+	<!-- - - - - - - -  -->
+	<!-- Build Settings -->
+	<!-- - - - - - - -  -->
+
+	<packaging>jar</packaging>
+</project>

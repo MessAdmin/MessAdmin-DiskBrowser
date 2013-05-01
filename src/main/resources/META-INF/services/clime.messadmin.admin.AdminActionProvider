@@ -1,0 +1,3 @@
+## Providers for admin actions
+# Server-level
+clime.messadmin.providers.userdata.diskbrowser.DiskBrowser

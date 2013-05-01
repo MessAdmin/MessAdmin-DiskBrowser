@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.4"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MessAdmin-Core"/>
+	<classpathentry kind="lib" path="/MessAdmin-Core/lib/servlet23-tomcat41.jar" sourcepath="/MessAdmin-Core/lib-src/servlet-api-2.5-sources.zip"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
