@@ -30,6 +30,7 @@ public class DiskBrowser extends BaseAdminActionProvider implements ServerDataPr
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public int getPriority() {
 		return 5;
 	}
@@ -52,6 +53,7 @@ public class DiskBrowser extends BaseAdminActionProvider implements ServerDataPr
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//setNoCache(response); // we don't want to prevent caching
 		helper.serviceWithContext(request, response, null);

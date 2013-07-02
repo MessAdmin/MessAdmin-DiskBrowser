@@ -41,6 +41,7 @@ class DiskResource extends BaseResource {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public String getPath() {
 		String path = super.getPath();
 		/* Directories must end with "/" */
@@ -51,6 +52,7 @@ class DiskResource extends BaseResource {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public BaseResource getCanonicalResource() {
 		try {
 			return new DiskResource(file.getCanonicalPath());
@@ -60,6 +62,7 @@ class DiskResource extends BaseResource {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Collection/*<DiskResource>*/ getChildResources(ServletContext context) {
 		File[] children = file.listFiles();
 		if (children == null) {
@@ -67,14 +70,14 @@ class DiskResource extends BaseResource {
 			return Collections.EMPTY_LIST;
 		}
 		Collection result = new ArrayList(children.length);
-		for (int i = 0; i < children.length; ++i) {
-			File child = children[i];
+		for (File child : children) {
 			result.add(new DiskResource(child.getPath(), this));
 		}
 		return result;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected BaseResource getParentDirectoryInternal() {
 		String parent = file.getParent();
 		if (parent == null) {
@@ -85,39 +88,47 @@ class DiskResource extends BaseResource {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public String getFileName() {
 		return file.getName();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isFile() {
 		return ! resourcePath.equals("..") && ! resourcePath.equals(".") && file.isFile();
 	}
 	/** {@inheritDoc} */
+	@Override
 	public boolean isDirectory() {
 		return resourcePath.equals("..") || resourcePath.equals(".") || file.isDirectory();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isHidden() {
 		return file.isHidden();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean canRead() {
 		return file.canRead();
 	}
 	/** {@inheritDoc} */
+	@Override
 	public boolean canWrite() {
 		return file.canWrite();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean canDelete() {
 		return canRename();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean canRename() {
 		File parent = file.getParentFile();
 		if ("..".equals(resourcePath) || ".".equals(resourcePath) ||
@@ -130,6 +141,7 @@ class DiskResource extends BaseResource {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean canCompress() {
 		if (! canRename()) {
 			return false;
@@ -161,9 +173,10 @@ class DiskResource extends BaseResource {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public InputStream getResourceAsStream(ServletContext servletContext) {
 		try {
-			return new BufferedInputStream(new FileInputStream(file), 8192);
+			return new BufferedInputStream(new FileInputStream(file), 32768);
 		} catch (FileNotFoundException fnfe) {
 			return null;
 		} catch (SecurityException se) {
@@ -172,6 +185,7 @@ class DiskResource extends BaseResource {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected URL getURL(ServletContext context) {
 		try {
 			return file.toURI().toURL();
@@ -181,17 +195,20 @@ class DiskResource extends BaseResource {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public long getContentLength(ServletContext context) {
 		return file.length();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public long getLastModified(ServletContext context) {
 		return file.lastModified();
 	}
 
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean delete() throws IOException {
 		// delete the required file
 		if (file.isFile()) {
@@ -205,8 +222,7 @@ class DiskResource extends BaseResource {
 	protected boolean deleteDirectoryInternal(File dir) {
 		// recursively delete the directory
 		File[] children = dir.listFiles();
-		for (int i = 0; i < children.length; ++i) {
-			File child = children[i];
+		for (File child : children) {
 			if (child.isFile()) {
 				child.delete();
 			} else {
@@ -217,6 +233,7 @@ class DiskResource extends BaseResource {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean compress() throws IOException {
 		if (file.isFile()) {
 			GZipUtils.compress(file);
@@ -228,6 +245,7 @@ class DiskResource extends BaseResource {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean renameTo(String newName) throws IOException {
 		// rename the required file
 		File newFile = new File(newName);

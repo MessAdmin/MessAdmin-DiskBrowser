@@ -28,11 +28,13 @@ class RootDiskResource extends BaseResource {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public BaseResource getCanonicalResource() {
 		return this;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Collection/*<DiskResource>*/ getChildResources(ServletContext context) {
 		File[] roots = File.listRoots();
 		Collection/*<DiskResource>*/ result = new ArrayList(roots == null ? 1 : roots.length);
@@ -40,9 +42,8 @@ class RootDiskResource extends BaseResource {
 			if (roots.length == 0) {
 				result.add(new DiskResource(new File("").getPath()));
 			} else {
-				for (int i = 0; i < roots.length; ++i) {
-					File root = roots[i];
-					// roots[i].getCanonicalPath() leads to a "drive not ready" on Windows...
+				for (File root : roots) {
+					// root.getCanonicalPath() leads to a "drive not ready" on Windows...
 					result.add(new DiskResource(root.getPath()));
 				}
 			}
@@ -51,86 +52,103 @@ class RootDiskResource extends BaseResource {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected BaseResource getParentDirectoryInternal() {
 		return null;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public String getFileName() {
 		throw new UnsupportedOperationException();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isFile() {
 		return false;
 	}
 	/** {@inheritDoc} */
+	@Override
 	public boolean isDirectory() {
 		return true;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isHidden() {
 		return false;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean canRead() {
 		return true;
 	}
 	/** {@inheritDoc} */
+	@Override
 	public boolean canWrite() {
 		return false;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean canDelete() {
 		return false;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean canRename() {
 		return false;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean canCompress() {
 		return false;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public InputStream getResourceAsStream(ServletContext servletContext) {
 		throw new UnsupportedOperationException();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected URL getURL(ServletContext context) {
 		throw new UnsupportedOperationException();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public long getContentLength(ServletContext context) {
 		return 0;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public long getLastModified(ServletContext context) {
 		return 0;
 	}
 
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean delete() throws IOException {
 		throw new UnsupportedOperationException();
 	}
 
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean compress() throws IOException {
 		throw new UnsupportedOperationException();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean renameTo(String newName) throws IOException {
 		throw new UnsupportedOperationException();
 	}

@@ -32,11 +32,13 @@ class DiskBrowserHelper extends BaseBrowserHelper {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public String getI18nBundleName() {
 		return BUNDLE_NAME;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected BaseResource getResource(ServletContext context, String resourcePath) {
 		if ("".equals(resourcePath)) {
 			return getDefaultRootResource();
@@ -46,11 +48,13 @@ class DiskBrowserHelper extends BaseBrowserHelper {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected BaseResource getDefaultRootResource() {
 		return RootDiskResource.INSTANCE;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected BaseResource getDefaultUserResource() {
 		try {
 //			return FileSystemView.getFileSystemView().getDefaultDirectory().getCanonicalPath();
@@ -61,6 +65,7 @@ class DiskBrowserHelper extends BaseBrowserHelper {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected String getXHTMLPreResourceListing(BaseResource resource) {
 		StringBuffer out = new StringBuffer(512);
 		out.append(super.getXHTMLPreResourceListing(resource));
@@ -87,8 +92,9 @@ class DiskBrowserHelper extends BaseBrowserHelper {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected String getXHTMLPostResourceListing(BaseResource resource) {
-		StringBuffer out = new StringBuffer(1024);
+		StringBuilder out = new StringBuilder(1024);
 		// Form for mass actions
 		// "check all" checkbox
 		String massActionFormName = adminActionProviderCallback.getActionID()+"-massActions";
@@ -124,6 +130,7 @@ class DiskBrowserHelper extends BaseBrowserHelper {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected void appendEntryPre(StringBuffer xhtml, ServletContext context, BaseResource path, String displayName, String urlPrefix) {
 		if ( ! "..".equals(displayName) && ! RootDiskResource.INSTANCE.equals(path) && ! Arrays.asList(File.listRoots()).contains(((DiskResource)path).file)) {
 			// Form for mass actions (deletion & compression for now)
@@ -139,11 +146,13 @@ class DiskBrowserHelper extends BaseBrowserHelper {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected String getXHTMLResourceListing(ServletContext context, BaseResource resource) {
 		return super.getXHTMLResourceListing(context, resource.getCanonicalResource());
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected boolean compressFile(BaseResource resource, HttpServletRequest request, HttpServletResponse response, ServletContext context) throws IOException {
 		boolean result = resource.compress();
 		resource.delete();
@@ -151,6 +160,7 @@ class DiskBrowserHelper extends BaseBrowserHelper {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected boolean compressDirectory(BaseResource resource, HttpServletRequest request, HttpServletResponse response, ServletContext context) throws IOException {
 		boolean result = resource.compress();
 		// Do not automatically delete the directory, as files may have been skipped during compression (e.g. read permission)!
@@ -158,6 +168,7 @@ class DiskBrowserHelper extends BaseBrowserHelper {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected boolean renameFile(BaseResource resource, String newName, HttpServletRequest request, HttpServletResponse response, ServletContext context) throws IOException {
 		// rename the required file
 		File newFile = new File(newName);
