@@ -66,17 +66,17 @@ class DiskBrowserHelper extends BaseBrowserHelper {
 
 	/** {@inheritDoc} */
 	@Override
-	protected String getXHTMLPreResourceListing(BaseResource resource) {
+	protected String getXHTMLPreResourceListing(BaseResource resource, ClassLoader cl) {
 		StringBuffer out = new StringBuffer(512);
-		out.append(super.getXHTMLPreResourceListing(resource));
+		out.append(super.getXHTMLPreResourceListing(resource, cl));
 		if ( ! RootDiskResource.INSTANCE.equals(resource)) {//StringUtils.isNotBlank(resource.getPath())
 			// display disk free space (if available)
 			{
 				long diskUseableSpace = Files.getUsableSpaceForFile(((DiskResource)resource).file);
 				if (diskUseableSpace >= 0) {
 					BytesFormat format = BytesFormat.getBytesInstance(I18NSupport.getAdminLocale(), true);
-					String result = I18NSupport.getLocalizedMessage(getI18nBundleName(), "xhtml.pre",//$NON-NLS-1$
-							new Object[] {format.format(diskUseableSpace)});
+					String result = I18NSupport.getLocalizedMessage(getI18nBundleName(), cl, "xhtml.pre",//$NON-NLS-1$
+							format.format(diskUseableSpace));
 					out.append(result).append('\n');
 				}
 			}
@@ -93,39 +93,39 @@ class DiskBrowserHelper extends BaseBrowserHelper {
 
 	/** {@inheritDoc} */
 	@Override
-	protected String getXHTMLPostResourceListing(BaseResource resource) {
+	protected String getXHTMLPostResourceListing(BaseResource resource, ClassLoader cl) {
 		StringBuilder out = new StringBuilder(1024);
 		// Form for mass actions
 		// "check all" checkbox
 		String massActionFormName = adminActionProviderCallback.getActionID()+"-massActions";
 		out.append("<ul style=\"margin: 0\"><li style=\"list-style-type: none;\"><label><input type=\"checkbox\" onclick=\"javascript:checkUncheckAllCB(this, '").append(getResourceID()).append("');\"/>");
-		out.append(I18NSupport.getLocalizedMessage(getI18nInternalBundleName(), "select.all"));//$NON-NLS-1$
+		out.append(I18NSupport.getLocalizedMessage(getI18nInternalBundleName(), cl, "select.all"));//$NON-NLS-1$
 		out.append("</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 		{
 			// mass deletion
 			String urlPrefix = "?" + AdminActionProvider.ACTION_PARAMETER_NAME + '=' + adminActionProviderCallback.getActionID()
 				+ '&' + FILE_ACTION_PARAMETER_NAME + '=' + FILE_DELETE_ACTION;
 			out.append("<button name=\"submit\" onclick=\"if (hasCheckedCB(this, '").append(getResourceID()).append("') && window.confirm('").append(I18NSupport.getLocalizedMessage(getI18nBundleName(), "action.delete.confirm")).append("'))  jah('").append(urlPrefix).append("','").append(DisplayProvider.Util.getId(displayProviderCallback)).append("','POST',buildFormQueryString('").append(massActionFormName).append("'));return false;\">");
-			out.append(I18NSupport.getLocalizedMessage(getI18nInternalBundleName(), "action.delete"));//$NON-NLS-1$
+			out.append(I18NSupport.getLocalizedMessage(getI18nInternalBundleName(), cl, "action.delete"));//$NON-NLS-1$
 			out.append("</button>\n");
 		}
 		{
 			// mass compression
 			String urlPrefix = "?" + AdminActionProvider.ACTION_PARAMETER_NAME + '=' + adminActionProviderCallback.getActionID()
 				+ '&' + FILE_ACTION_PARAMETER_NAME + '=' + FILE_COMPRESS_ACTION;
-			out.append("<button name=\"submit\" onclick=\"if (hasCheckedCB(this, '").append(getResourceID()).append("') && window.confirm('").append(I18NSupport.getLocalizedMessage(getI18nBundleName(), "action.compress.confirm", null)).append("'))  jah('").append(urlPrefix).append("','").append(DisplayProvider.Util.getId(displayProviderCallback)).append("','POST',buildFormQueryString('").append(massActionFormName).append("'));return false;\">");
-			out.append(I18NSupport.getLocalizedMessage(getI18nInternalBundleName(), "action.compress"));//$NON-NLS-1$
+			out.append("<button name=\"submit\" onclick=\"if (hasCheckedCB(this, '").append(getResourceID()).append("') && window.confirm('").append(I18NSupport.getLocalizedMessage(getI18nBundleName(), "action.compress.confirm")).append("'))  jah('").append(urlPrefix).append("','").append(DisplayProvider.Util.getId(displayProviderCallback)).append("','POST',buildFormQueryString('").append(massActionFormName).append("'));return false;\">");
+			out.append(I18NSupport.getLocalizedMessage(getI18nInternalBundleName(), cl, "action.compress"));//$NON-NLS-1$
 			out.append("</button>\n");
 		}
 		{
 			// mass download
 			out.append("<button name=\"submit\" onclick=\"if (! hasCheckedCB(this, '").append(getResourceID()).append("'))  return false; { document.getElementById('").append(massActionFormName).append("').target='_blank'; document.getElementById('").append(massActionFormName+'_'+FILE_ACTION_PARAMETER_NAME).append("').value='").append(FILE_DOWNLOAD_ACTION).append("'; return true; }\">");
-			out.append(I18NSupport.getLocalizedMessage(getI18nInternalBundleName(), "action.download"));//$NON-NLS-1$
+			out.append(I18NSupport.getLocalizedMessage(getI18nInternalBundleName(), cl, "action.download"));//$NON-NLS-1$
 			out.append("</button>\n");
 		}
 		out.append("</li></ul>\n");
 		out.append("</form>\n");
-		out.append(super.getXHTMLPostResourceListing(resource));
+		out.append(super.getXHTMLPostResourceListing(resource, cl));
 		return out.toString();
 	}
 

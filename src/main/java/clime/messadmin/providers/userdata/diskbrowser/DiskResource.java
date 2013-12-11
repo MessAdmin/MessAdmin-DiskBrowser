@@ -176,7 +176,7 @@ class DiskResource extends BaseResource {
 	@Override
 	public InputStream getResourceAsStream(ServletContext servletContext) {
 		try {
-			return new BufferedInputStream(new FileInputStream(file), 32768);
+			return new BufferedInputStream(new FileInputStream(file), 65536);
 		} catch (FileNotFoundException fnfe) {
 			return null;
 		} catch (SecurityException se) {
